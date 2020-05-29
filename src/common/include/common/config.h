@@ -24,7 +24,6 @@ typedef struct {
 
 struct config_t {
     const char *config_short;
-    const char *config_desc;
     config_callback_t set_callback;
     config_value_t value;
     struct config_t* next;

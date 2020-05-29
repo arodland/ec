@@ -12,7 +12,6 @@
 
 config_t power_ccd_en = {
     .config_short = "Default Camera State",
-    .config_desc = "When set, the camera is enabled on system reset",
     .value = {
         .min_value = 0,
         .max_value = 1,

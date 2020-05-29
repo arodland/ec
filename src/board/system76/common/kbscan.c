@@ -12,7 +12,6 @@
 
 config_t kbscan_cfg_fnlock = {
     .config_short = "Fn Lock",
-    .config_desc = "When enabled, F1-F12 will activate their alternative function",
     .value = {
         .min_value = 0,
         .max_value = 1,

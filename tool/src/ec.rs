@@ -26,7 +26,6 @@ pub enum Cmd {
     FanSet = 8,
 
     ConfigGetName = 32,
-    ConfigGetDesc = 33,
     ConfigGetValue = 34,
     ConfigSetValue = 35,
 }
@@ -289,21 +288,16 @@ impl<T: Timeout> Ec<T> {
         Ok(str)
     }
 
-    pub unsafe fn config_get_desc(&mut self, index: u8) -> Result<String, Error> {
-        self.write(2, index);
-        self.command(Cmd::ConfigGetDesc)?;
-        let mut i = 0;
-        let mut str = String::from("");
+    pub fn config_get_desc(&mut self, index: u8) -> Result<String, Error> {
+        let name = unsafe { self.config_get_name(index)? };
 
-        while (i + 2) < 256 {
-            let data = self.read((i + 2) as u8) as char;
-            if data == '\0' {
-                break;
-            }
-            i += 1;
-            str.push(data);
-        }
-        Ok(str)
+        let desc = match name.as_str() {
+            "Default Camera State" => String::from("When set, the camera is enabled on system reset"),
+            "Fn Lock" => String::from("When enabled, F1-F12 will activate their alternative function"),
+            _ => String::from(""),
+        };
+
+        Ok(desc)
     }
 
     pub unsafe fn config_get_value(&mut self, index: u8) -> Result<Value, Error> {

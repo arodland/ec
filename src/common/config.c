@@ -193,8 +193,8 @@ bool config_register(config_t *entry) __reentrant {
         return false;
     }
 
-    // Short name and desc must be set.
-    if (!entry->config_short || !entry->config_desc) {
+    // Short name must be set.
+    if (!entry->config_short) {
         return false;
     }
 

@@ -180,18 +180,6 @@ static enum Result cmd_config_get_short_by_index(void) {
     return RES_ERR;
 }
 
-static enum Result cmd_config_get_desc_by_index(void) {
-    uint8_t index = smfi_cmd[2];
-
-    config_t *entry = config_index(index);
-    if (entry) {
-        strncpy(&smfi_cmd[2], entry->config_desc, ARRAY_SIZE(smfi_cmd) - 2);
-        return RES_OK;
-    }
-
-    return RES_ERR;
-}
-
 static enum Result cmd_config_get_value_by_index(void) {
     uint8_t index = smfi_cmd[2];
 
@@ -275,10 +263,6 @@ void smfi_event(void) {
             /* Config related commands */
             case CMD_GET_CONFIG_NAME:
                 smfi_cmd[1] = cmd_config_get_short_by_index();
-                break;
-
-            case CMD_GET_CONFIG_DESC:
-                smfi_cmd[1] = cmd_config_get_desc_by_index();
                 break;
 
             case CMD_GET_CONFIG_VALUE:
